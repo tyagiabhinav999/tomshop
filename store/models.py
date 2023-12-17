@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Collection(models):
+class Collection(models.Model):
     title = models.CharField(max_length=255)
     featured_product = models.ForeignKey('Product', on_delete=models.SET_NULL, related_name='+') # Resolving CIRCULAR DEPENDENCY
 
@@ -42,21 +42,21 @@ class Order(models.Model):
     payment_status = models.CharField(max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
 
-class OrderItem(models):
+class OrderItem(models.Model):
     quantity = models.PositiveSmallIntegerField()
     unit_price = models.DecimalField(max_digits=6, decimal_places=2)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
-class Cart(models):
+class Cart(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
-class CartItem(models):
+class CartItem(models.Model):
     quantity = models.PositiveSmallIntegerField()
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
-class Address(models):
+class Address(models.Model):
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     customer = models.OneToOneField(Customer, on_delete=models.CASCADE, primary_key=True)
