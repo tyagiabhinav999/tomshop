@@ -10,7 +10,8 @@ class TaggedItem(models.Model):
     # what tag is applied to what object
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     # to make our tag generic, we need two thing: (1) Type to find the table (of the object like product, video etc) (2) ID
-    object_id = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
 
 
