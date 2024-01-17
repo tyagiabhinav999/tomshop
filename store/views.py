@@ -7,7 +7,7 @@ from .serializers import ProductSerializer
 # Create your views here.(
 @api_view()
 def product_list(request):
-    products = Product.objects.all()
+    products = Product.objects.select_related('collection').all()
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
 
